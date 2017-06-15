@@ -6,6 +6,12 @@ libzstd = library_dependency("libzstd")
 version = "1.2.0"
 source  = "https://github.com/facebook/zstd/archive/v$(version).tar.gz"
 
+if is_windows()
+    using WinRPM
+    provides(WinRPM.RPM,"libzstd",libzstd,os = :Windows)
+end
+
+
 prefix = joinpath(dirname(@__FILE__), "usr")
 provides(Sources, URI(source), libzstd, unpacked_dir="zstd-$(version)")
 provides(
